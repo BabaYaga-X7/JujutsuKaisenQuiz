@@ -57,6 +57,7 @@ questionsContainer.addEventListener('submit', e => {
     e.preventDefault();
 
     let score = 0;
+    let scorePercentage = 0;
     const finalScoreElement = document.querySelector("#finalScore");
     const numberOfQuestions = document.querySelectorAll('.question');
     const formInputs = questionsContainer.elements;
@@ -71,5 +72,15 @@ questionsContainer.addEventListener('submit', e => {
         }
     }
 
-    finalScoreElement.innerHTML = (score / numberOfQuestions.length) * 100;
+    scorePercentage = (score / numberOfQuestions.length) * 100;
+
+    let counter = 0;
+    const scoreAnimator = setInterval(() => {
+        if (counter >= scorePercentage) {
+            clearInterval(scoreAnimator);
+        }
+        finalScoreElement.innerHTML = counter;
+        counter++;
+    }, 10);
+
 });
