@@ -13,43 +13,25 @@
 <body>
     <!--Heading Section-->
     <div class="constainer display-2 text-center py-3 text-primary">Jujutsu Kaisen Quiz</div>
-
     <!--Questions Section-->
     <form id="questionsContainer" class="container rounded bg-primary text-white py-2">
-        <div>
-            <label for="q1" class="form-label">This is question no 1:</label>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="a" />
-                <label for="q1" class="form-check-label">Answer 1</label>
-            </div>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="b" />
-                <label for="q1" class="form-check-label">Answer 2</label>
-            </div>
-        </div>
-        <div class="mt-4">
-            <label for="q1" class="form-label">This is question no 1:</label>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="a" />
-                <label for="q1" class="form-check-label">Answer 1</label>
-            </div>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="b" />
-                <label for="q1" class="form-check-label">Answer 2</label>
-            </div>
-        </div>
-        <div class="mt-4">
-            <label for="q1" class="form-label">This is question no 1:</label>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="a" />
-                <label for="q1" class="form-check-label">Answer 1</label>
-            </div>
-            <div class="form-check">
-                <input name="q1" type="radio" class="form-check-input" value="b" />
-                <label for="q1" class="form-check-label">Answer 2</label>
-            </div>
-        </div>
+        <input type="submit" value="Submit" data-bs-toggle="modal" data-bs-target="#scoreModal">
     </form>
+
+    <!-- Modal -->
+    <div class="modal fade" id="scoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="scoreModal" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body display-3 text-primary text-center">
+                    You have scored <br /><span id="finalScore">0</span>%
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
     <script src="main.js"></script>
 </body>
 

@@ -1,30 +1,30 @@
 const data = [
     {
-        id: "1",
+        id: "q1",
         question: "Whats the full name of Gojo?",
         options: ["Satoru Gojo", "Nara Gojo", "Kenji Gojo"],
         answer: ["Satoru Gojo"]
     },
     {
-        id: "2",
+        id: "q2",
         question: "What is the name of Yuji's Grandpa?",
         options: ["Shigeru", "Wasuke", "Jin"],
         answer: ["Wasuke"]
     },
     {
-        id: "3",
+        id: "q3",
         question: "What is the name of Gojo's Domain Expansion?",
         options: ["Malevolent Shrine", "Unlimited Void", "Six Eyes"],
         answer: ["Unlimited Void"]
     },
     {
-        id: "4",
+        id: "q4",
         question: "How many Sukuna Fingers are there?",
         options: ["18", "21", "20"],
         answer: ["20"]
     },
     {
-        id: "5",
+        id: "q5",
         question: "How many Sukuna Fingers are there?",
         options: ["18", "21", "20"],
         answer: ["20"]
@@ -35,20 +35,41 @@ const questionsContainer = document.querySelector("#questionsContainer");
 
 let questions = "";
 
-data.forEach(q => {
-        questions +=
+data.forEach((q, index) => {
+    questions +=
         `<div class="my-3 mx-2">
-            <label for="q${q.id}" class="form-label">${q.id +". "+ q.question}</label><br />`;
-        
-        q.options.forEach(option =>
-            questions += 
-                `<div class="form-check form-check-inline">
-                <input name="q${q.id}" type="radio" class="form-check-input" value="${option}" />
-                <label for="q${q.id}" class="form-check-label">${option}</label>
-                </div>`
-        );
+            <label for="${q.id}" class="form-label question">${index + 1 + ". " + q.question}</label><br />`;
 
-        questions += `</div>`;
+    q.options.forEach(option =>
+        questions +=
+        `<div class="form-check form-check-inline">
+                <input name="${q.id}" type="radio" class="form-check-input" value="${option}" />
+                <label for="${q.id}" class="form-check-label">${option}</label>
+                </div>`
+    );
+
+    questions += `</div>`;
 });
 
-questionsContainer.innerHTML = questions;
+questionsContainer.insertAdjacentHTML("afterBegin", questions);
+
+questionsContainer.addEventListener('submit', e => {
+    e.preventDefault();
+
+    let score = 0;
+    const finalScoreElement = document.querySelector("#finalScore");
+    const numberOfQuestions = document.querySelectorAll('.question');
+    const formInputs = questionsContainer.elements;
+
+    for (let i = 0; i < formInputs.length; i++) {
+        if (formInputs[i].checked) {
+            data.forEach(question => {
+                if (question.id === formInputs[i].name) {
+                    score += formInputs[i].value === question.answer[0] ? 1 : 0;
+                }
+            });
+        }
+    }
+
+    finalScoreElement.innerHTML = (score / numberOfQuestions.length) * 100;
+});
