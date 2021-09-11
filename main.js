@@ -1,3 +1,4 @@
+// Declarations:
 const data = [
     {
         id: "q1",
@@ -25,22 +26,82 @@ const data = [
     },
     {
         id: "q5",
-        question: "How many Sukuna Fingers are there?",
-        options: ["18", "21", "20"],
-        answer: ["20"]
+        question: "Who is the strongest Jujutsu Sorcerer in anime?",
+        options: ["Junpie", "Sukuna", "Satoru Gojo", "Panda"],
+        answer: ["Satoru Gojo"]
+    },
+    {
+        id: "q6",
+        question: "Who took out Itadori’s heart?",
+        options: ["Gojo", "Sukuna", "Megumi", "Jogo"],
+        answer: ["Sukuna"]
+    },
+    {
+        id: "q7",
+        question: "Who ate Sukua's first finger?",
+        options: ["Cursed Spirit", "Panda", "Megumi", "Yuji"],
+        answer: ["Yuji"]
+    },
+    {
+        id: "q8",
+        question: "Which anime studio is animating Jujutsu Kaisen?",
+        options: ["Studio WIT", "Studio BONES", "Funimation", "Studio MAPPA"],
+        answer: ["Studio MAPPA"]
+    },
+    {
+        id: "q9",
+        question: "Who was the first one to fought with Sukuna in anime?",
+        options: ["Yuji", "Mahito", "Gojo", "Nobara"],
+        answer: ["Gojo"]
+    },
+    {
+        id: "q10",
+        question: "Who created Panda?",
+        options: ["No One", "Yoshinobu Gakuganji", "Utahime lori", "Masamichi Yaga"],
+        answer: ["Masamichi Yaga"]
+    },
+    {
+        id: "q11",
+        question: "What idol is Aoi Todo obsessed with?",
+        options: ["Takada", "Tomatsu", "Takagaki", "Tsuri"],
+        answer: ["Takada"]
     }
 ];
 
+const randomizer = (inputArray, numberOfOutputElements) => {
+    const result = [];
+    const elementsCount = inputArray.length;
+
+    for (let i = 0; i < numberOfOutputElements; i++) {
+        let randomIndex = Math.floor(Math.random() * elementsCount);
+        if (!result.includes(inputArray[randomIndex])) {
+            result.push(inputArray[randomIndex]);
+        } else {
+            i--; // Decrease the loop iteration count to maintain the numberOfOutputElements.
+        }
+    }
+
+    return result;
+};
+
+const randomQuestionsSelector = (numberOfQuestions) => randomizer(data, numberOfQuestions);
+
+const optionsRandomizer = (options) => randomizer(options, options.length);
+
+const getQuestion = questionId => data.find(question => question.id === questionId);
+
+// Selecting and populating questions:
 const questionsContainer = document.querySelector("#questionsContainer");
 
+const selectedQuestions = randomQuestionsSelector(5);
 let questions = "";
 
-data.forEach((q, index) => {
+selectedQuestions.forEach((q, index) => {
     questions +=
         `<div class="my-3 mx-2">
             <label for="${q.id}" class="form-label question">${index + 1 + ". " + q.question}</label><br />`;
 
-    q.options.forEach(option =>
+    optionsRandomizer(q.options).forEach(option =>
         questions +=
         `<div class="form-check form-check-inline">
                 <input name="${q.id}" type="radio" class="form-check-input" value="${option}" />
@@ -53,6 +114,7 @@ data.forEach((q, index) => {
 
 questionsContainer.insertAdjacentHTML("afterBegin", questions);
 
+// Evaluation of selected answers:
 questionsContainer.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -82,5 +144,3 @@ questionsContainer.addEventListener('submit', e => {
     }, 10);
 
 });
-
-const getQuestion = questionId => data.find(question => question.id === questionId);
