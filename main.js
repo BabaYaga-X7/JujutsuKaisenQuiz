@@ -60,17 +60,15 @@ questionsContainer.addEventListener('submit', e => {
     let scorePercentage = 0;
     const finalScoreElement = document.querySelector("#finalScore");
     const numberOfQuestions = document.querySelectorAll('.question');
-    const formInputs = questionsContainer.elements;
+    const formInputs = Array.from(questionsContainer.elements);
+    const selectedAnswers = formInputs.filter(input => input.checked);
 
-    for (let i = 0; i < formInputs.length; i++) {
-        if (formInputs[i].checked) {
-            data.forEach(question => {
-                if (question.id === formInputs[i].name) {
-                    score += formInputs[i].value === question.answer[0] ? 1 : 0;
-                }
-            });
+    selectedAnswers.forEach(answer => {
+        let question = getQuestion(answer.name);
+        if (question !== undefined) {
+            score += question.answer.includes(answer.value) ? 1 : 0;
         }
-    }
+    });
 
     scorePercentage = (score / numberOfQuestions.length) * 100;
 
@@ -84,3 +82,5 @@ questionsContainer.addEventListener('submit', e => {
     }, 10);
 
 });
+
+const getQuestion = questionId => data.find(question => question.id === questionId);
